@@ -1,6 +1,11 @@
 # FlexForge: Executable Machine-Failure Recovery Demo
 
-**Status: Proof of concept (not peer reviewed).** This is runnable scheduling code, not a simulation claim or screenshot-only mockup. The demo models a small *flexible job shop* with three machines and five two-stage jobs. At time `t=8` machine 0 fails for 8 time units. Work completed before the breakdown and unaffected operations already in progress remain fixed. An interrupted operation on the failed machine restarts from scratch; unstarted work may be reassigned to alternative eligible machines.
+[![FlexForge reproducibility checks](https://github.com/JACKKIEKIE/FlexForge/actions/workflows/ci.yml/badge.svg)](https://github.com/JACKKIEKIE/FlexForge/actions/workflows/ci.yml)
+
+**Status: Proof of concept (not peer reviewed).**
+
+**Automated CI verification:** [GitHub Actions run #1](https://github.com/JACKKIEKIE/FlexForge/actions/runs/44697810741) completed successfully on 2026-11-20, including OR-Tools installation, real CP-SAT scheduling, the 100-seed CP-SAT benchmark, and artifact upload. This validates execution, **not** any claimed numerical performance advantage.
+ This is runnable scheduling code, not a simulation claim or screenshot-only mockup. The demo models a small *flexible job shop* with three machines and five two-stage jobs. At time `t=8` machine 0 fails for 8 time units. Work completed before the breakdown and unaffected operations already in progress remain fixed. An interrupted operation on the failed machine restarts from scratch; unstarted work may be reassigned to alternative eligible machines.
 
 ## Run in 60 seconds
 
