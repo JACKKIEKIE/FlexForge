@@ -1,0 +1,32 @@
+{
+  "seed": 7,
+  "failure_machine": 0,
+  "failure_time": 8,
+  "repaired_at": 16,
+  "frozen_operations": 5,
+  "interrupted_operations": [
+    [
+      1,
+      1
+    ]
+  ],
+  "solver": "EDD heuristic",
+  "status": "HEURISTIC",
+  "solver_elapsed_ms": 0,
+  "before_failure_plan": {
+    "makespan": 23,
+    "weighted_tardiness": 0,
+    "completed_jobs": 5
+  },
+  "recovered_edd": {
+    "makespan": 30,
+    "weighted_tardiness": 0,
+    "completed_jobs": 5
+  },
+  "recovered_selected": {
+    "makespan": 30,
+    "weighted_tardiness": 0,
+    "completed_jobs": 5
+  },
+  "comparison_note": "No optimization gain is claimed unless tested with OR-Tools installed."
+}
