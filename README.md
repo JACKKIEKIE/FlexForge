@@ -4,8 +4,9 @@
 
 **Status: Proof of concept (not peer reviewed).**
 
-**Automated CI verification:** [GitHub Actions run #1](https://github.com/JACKKIEKIE/FlexForge/actions/runs/44697810741) completed successfully on 2026-11-20, including OR-Tools installation, real CP-SAT scheduling, the 100-seed CP-SAT benchmark, and artifact upload. This validates execution, **not** any claimed numerical performance advantage.
- This is runnable scheduling code, not a simulation claim or screenshot-only mockup. The demo models a small *flexible job shop* with three machines and five two-stage jobs. At time `t=8` machine 0 fails for 8 time units. Work completed before the breakdown and unaffected operations already in progress remain fixed. An interrupted operation on the failed machine restarts from scratch; unstarted work may be reassigned to alternative eligible machines.
+**Automated CI verification:** [GitHub Actions run #1](https://github.com/JACKKIEKIE/FlexForge/actions/runs/44697810741) completed successfully on 2026-11-20, including OR-Tools installation, real CP-SAT scheduling, the 100-seed CP-SAT benchmark, and artifact upload. This verifies executable CP-SAT scheduling and the benchmark; quantitative effects below are measured on this small synthetic testbed, not on a real factory.
+
+This is runnable scheduling code, not a screenshot-only mockup. The demo models a small *flexible job shop* with three machines and five two-stage jobs. At time `t=8` machine 0 fails for 8 time units. Work completed before the breakdown and unaffected operations already in progress remain fixed. An interrupted operation on the failed machine restarts from scratch; unstarted work may be reassigned to alternative eligible machines.
 
 ## Run in 60 seconds
 
@@ -61,9 +62,16 @@ This prototype demonstrates a **working scheduling mechanism**. It is not yet an
 
 CP-SAT modeling approach follows Google's public [Flexible Job Shop](https://github.com/google/or-tools/blob/stable/examples/python/flexible_job_shop_sat.py) implementation and [Scheduling documentation](https://github.com/google/or-tools/blob/stable/ortools/sat/docs/scheduling.md).
 
-## Verified here (2026-11-20)
+## Verified CI results (2026-11-20)
 
-The dependency-free heuristic demo and its four unit tests passed. Across 100 deterministic seeds, both EDD and FIFO recovery schedules passed machine-assignment, precedence, frozen-task, and downtime validity checks. A machine-0 operation is interrupted and reassigned in the default demonstration. See the generated `demo_output/*.csv`, `summary.json`, and Gantt preview images. **The CP-SAT engine could not be executed in this environment because `ortools` could not be installed; its results must be verified with the explicit `--engine cpsat` command.**
+[Workflow run #1](https://github.com/JACKKIEKIE/FlexForge/actions/runs/44697810741) completed successfully with OR-Tools installed. It executed four unit tests, an actual CP-SAT recovery run, and 100 deterministic CP-SAT benchmark instances. Results are committed directly on `main` for reading without GitHub login:
+
+- **[benchmark.csv](benchmark.csv)** - all 100 seeds with EDD, FIFO, and CP-SAT metrics (300 rows)
+- **[summary.json](summary.json)** - real CP-SAT recovery result (status `OPTIMAL`, 322.58 ms; makespan 27 versus EDD 30 in seed 7)
+- Across 100 seeds, CP-SAT returned `OPTIMAL` in all 100 cases. Mean makespan was **26.37** (CP-SAT), **27.73** (EDD), **27.73** (FIFO), a **4.9% lower mean makespan** versus either baseline. Mean weighted tardiness was **0.39** versus **0.47** for both baselines. These are observed synthetic benchmark outcomes; no broader 15% claim is made.
+- The solver's per-instance 2-second limit is an explicit search budget, **not** a guarantee for end-to-end application latency or optimality in larger factories.
+
+On the initial local environment, OR-Tools could not be installed, so only the heuristic path was tested locally. GitHub CI subsequently installed OR-Tools successfully and verified CP-SAT execution. The CI job archived the generated outputs; the two key source-derived result files above are also present in the Git tree.
 
 Generate optional schedule images with:
 
